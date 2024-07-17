@@ -1,6 +1,3 @@
-//import { App } from "./App.1";
-
-//export default App;
 import React from "react";
 import web3 from "./web3";
 import lottery from "./lottery";
@@ -11,7 +8,7 @@ class App extends React.Component {
     manager: "",
     players: [],
     balance: "",
-    //winplayer:"",
+    winplayer:"",
     value: "",
     message: "",
   };
@@ -19,9 +16,9 @@ class App extends React.Component {
     const manager = await lottery.methods.manager().call();
     const players = await lottery.methods.getPlayers().call();
     const balance = await web3.eth.getBalance(lottery.options.address);
-    //const winplayer = await lottery.methods.winplayer().call();
+    const winplayer = await lottery.methods.winplayer().call();
 
-    this.setState({ manager, players, balance  });
+    this.setState({ manager, players, balance ,winplayer });
   }
 
   onSubmit = async (event) => {
@@ -41,7 +38,6 @@ class App extends React.Component {
 
   onClick = async () => {
     const accounts = await web3.eth.getAccounts();
-    //const winplayer = await lottery.methods.winplayer().call();
 
     this.setState({ message: "Waiting on transaction success..." });
 
@@ -49,7 +45,7 @@ class App extends React.Component {
       from: accounts[0],
     });
 
-    this.setState({ message: "Winner is picked!"});
+    this.setState({ message: winplayer + "is  a winner"});
   };
 
   render() {
